@@ -17,7 +17,7 @@ import {
 import {
   withAccountAddress,
   withAccountAssets,
-  withHideSplashScreenOnMount,
+  withHideSplashScreen,
   withRequestsInit,
 } from '../hoc';
 import { position } from '../styles';
@@ -31,6 +31,7 @@ const WalletScreen = ({
   assetsCount,
   assetsTotalUSD,
   fetching,
+  onHideSplashScreen,
   onPressProfile,
   onPressWalletConnect,
   onRefreshList,
@@ -77,6 +78,7 @@ const WalletScreen = ({
       <AssetList
         fetchData={onRefreshList}
         onPressWalletConnect={onPressWalletConnect}
+        onSectionsLoaded={onHideSplashScreen}
         sections={filterEmptyAssetSections([sections.balances, sections.collectibles])}
         showShitcoins={showShitcoins}
       />
@@ -93,6 +95,7 @@ WalletScreen.propTypes = {
   }),
   fetching: PropTypes.bool.isRequired,
   fetchingUniqueTokens: PropTypes.bool.isRequired,
+  onHideSplashScreen: PropTypes.func,
   onPressProfile: PropTypes.func.isRequired,
   onPressWalletConnect: PropTypes.func.isRequired,
   onRefreshList: PropTypes.func.isRequired,
@@ -104,7 +107,7 @@ WalletScreen.propTypes = {
 export default compose(
   withAccountAddress,
   withAccountAssets,
-  withHideSplashScreenOnMount,
+  withHideSplashScreen,
   withRequestsInit,
   withSafeTimeout,
   withState('showShitcoins', 'toggleShowShitcoins', true),
