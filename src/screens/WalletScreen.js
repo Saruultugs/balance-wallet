@@ -2,8 +2,9 @@ import { withSafeTimeout } from '@hocs/safe-timers';
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { compose, onlyUpdateForPropTypes, withHandlers, withState } from 'recompact';
-import { AssetList, UniqueTokenRow } from '../components/asset-list';
+import { compose, onlyUpdateForKeys, withHandlers, withState } from 'recompact';
+import { AssetList } from '../components/asset-list';
+import { UniqueTokenRow } from '../components/unique-token';
 import Avatar from '../components/Avatar';
 import { BalanceCoinRow } from '../components/coin-row';
 import { ActivityHeaderButton, Header, HeaderButton } from '../components/header';
@@ -22,6 +23,7 @@ import {
 import { position } from '../styles';
 
 const BalanceRenderItem = renderItemProps => <BalanceCoinRow {...renderItemProps} />;
+const UniqueTokenRenderItem = renderItemProps => <UniqueTokenRow {...renderItemProps} />;
 const filterEmptyAssetSections = sections => sections.filter(({ totalItems }) => totalItems);
 
 const WalletScreen = ({
@@ -46,7 +48,7 @@ const WalletScreen = ({
     },
     collectibles: {
       data: buildUniqueTokenList(uniqueTokens),
-      renderItem: UniqueTokenRow,
+      renderItem: UniqueTokenRenderItem,
       title: 'Collectibles',
       totalItems: uniqueTokens.length,
       totalValue: '',
@@ -127,5 +129,5 @@ export default compose(
       }
     },
   }),
-  onlyUpdateForPropTypes,
+  onlyUpdateForKeys(['isScreenActive', ...Object.keys(WalletScreen.propTypes)]),
 )(WalletScreen);
