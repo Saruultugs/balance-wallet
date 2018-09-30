@@ -5,11 +5,7 @@ import {
   isToday,
   isYesterday,
 } from 'date-fns';
-import {
-  get,
-  groupBy,
-  isEmpty,
-} from 'lodash';
+import { get, groupBy, isEmpty } from 'lodash';
 import { createElement } from 'react';
 import { sortList } from '../utils';
 
@@ -45,8 +41,10 @@ export const getTransactionStatus = ({
   return undefined;
 };
 
-const groupTransactionByDate = transactions => {
-  return groupBy(transactions, ({ pending, timestamp: time }) => {
+const groupTransactionByDate = (transactions) => {
+  const sortedChronologically = sortList(transactions, 'timestamp.ms', Date.now()).reverse();
+
+  return groupBy(sortedChronologically, ({ pending, timestamp: time }) => {
     if (pending) return 'Pending';
 
     const { ms } = time;
@@ -81,7 +79,13 @@ const normalizeTransactions = ({ accountAddress, transactions }) =>
 
 const renderItemElement = renderItem => renderItemProps => createElement(renderItem, renderItemProps);
 
-export const buildTransactionsSections = ({ accountAddress, requests, transactions, requestRenderItem, transactionRenderItem }) => {
+export const buildTransactionsSections = ({
+  accountAddress,
+  requestRenderItem,
+  requests,
+  transactionRenderItem,
+  transactions,
+}) => {
   const normalizedTransactions = normalizeTransactions({ accountAddress, transactions });
   const transactionsByDate = groupTransactionByDate(normalizedTransactions);
 
@@ -90,6 +94,7 @@ export const buildTransactionsSections = ({ accountAddress, requests, transactio
     renderItem: renderItemElement(transactionRenderItem),
     title: section,
   }));
+
   let requestsToApprove = [];
   if (!isEmpty(requests)) {
     requestsToApprove = [{
@@ -102,5 +107,5 @@ export const buildTransactionsSections = ({ accountAddress, requests, transactio
   return [
     ...requestsToApprove,
     ...sectionedTransactions,
-  ]
+  ];
 };

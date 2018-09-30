@@ -2,8 +2,9 @@ import { withSafeTimeout } from '@hocs/safe-timers';
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { compose, onlyUpdateForPropTypes, withHandlers, withState } from 'recompact';
-import { AssetList, UniqueTokenRow } from '../components/asset-list';
+import { compose, onlyUpdateForKeys, withHandlers, withState } from 'recompact';
+import { AssetList } from '../components/asset-list';
+import { UniqueTokenRow } from '../components/unique-token';
 import Avatar from '../components/Avatar';
 import { BalanceCoinRow } from '../components/coin-row';
 import { ActivityHeaderButton, Header, HeaderButton } from '../components/header';
@@ -16,12 +17,13 @@ import {
 import {
   withAccountAddress,
   withAccountAssets,
-  withHideSplashScreenOnMount,
+  withHideSplashScreen,
   withRequestsInit,
 } from '../hoc';
 import { position } from '../styles';
 
 const BalanceRenderItem = renderItemProps => <BalanceCoinRow {...renderItemProps} />;
+const UniqueTokenRenderItem = renderItemProps => <UniqueTokenRow {...renderItemProps} />;
 const filterEmptyAssetSections = sections => sections.filter(({ totalItems }) => totalItems);
 
 const WalletScreen = ({
@@ -29,6 +31,7 @@ const WalletScreen = ({
   assetsCount,
   assetsTotalUSD,
   fetching,
+  onHideSplashScreen,
   onPressProfile,
   onPressWalletConnect,
   onRefreshList,
@@ -46,7 +49,7 @@ const WalletScreen = ({
     },
     collectibles: {
       data: buildUniqueTokenList(uniqueTokens),
-      renderItem: UniqueTokenRow,
+      renderItem: UniqueTokenRenderItem,
       title: 'Collectibles',
       totalItems: uniqueTokens.length,
       totalValue: '',
@@ -75,6 +78,7 @@ const WalletScreen = ({
       <AssetList
         fetchData={onRefreshList}
         onPressWalletConnect={onPressWalletConnect}
+        onSectionsLoaded={onHideSplashScreen}
         sections={filterEmptyAssetSections([sections.balances, sections.collectibles])}
         showShitcoins={showShitcoins}
       />
@@ -91,6 +95,7 @@ WalletScreen.propTypes = {
   }),
   fetching: PropTypes.bool.isRequired,
   fetchingUniqueTokens: PropTypes.bool.isRequired,
+  onHideSplashScreen: PropTypes.func,
   onPressProfile: PropTypes.func.isRequired,
   onPressWalletConnect: PropTypes.func.isRequired,
   onRefreshList: PropTypes.func.isRequired,
@@ -102,7 +107,7 @@ WalletScreen.propTypes = {
 export default compose(
   withAccountAddress,
   withAccountAssets,
-  withHideSplashScreenOnMount,
+  withHideSplashScreen,
   withRequestsInit,
   withSafeTimeout,
   withState('showShitcoins', 'toggleShowShitcoins', true),
@@ -127,5 +132,5 @@ export default compose(
       }
     },
   }),
-  onlyUpdateForPropTypes,
+  onlyUpdateForKeys(['isScreenActive', ...Object.keys(WalletScreen.propTypes)]),
 )(WalletScreen);
