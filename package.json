@@ -88,6 +88,7 @@
     "stream-browserify": "^1.0.0",
     "string_decoder": "^0.10.31",
     "styled-components": "3.3.3",
+    "svgo": "^1.1.1",
     "svgs": "^3.2.1",
     "timers-browserify": "^1.4.2",
     "tty-browserify": "0.0.0",
