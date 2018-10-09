@@ -744,9 +744,9 @@
     inherits "~2.0.1"
 
 "@types/node@^10.3.2":
-  version "10.11.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.3.tgz#c055536ac8a5e871701aa01914be5731539d01ee"
-  integrity sha512-3AvcEJAh9EMatxs+OxAlvAEs7OTy6AG94mcH1iqyVDwVVndekLxzwkWQ/Z4SDbY6GO2oyUXyWW8tQ4rENSSQVQ==
+  version "10.11.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.4.tgz#e8bd933c3f78795d580ae41d86590bfc1f4f389d"
+  integrity sha512-ojnbBiKkZFYRfQpmtnnWTMw+rzGp/JiystjluW9jgN3VzRwilXddJ6aGQ9V/7iuDG06SBgn7ozW9k3zcAnYjYQ==
 
 "@yarnpkg/lockfile@^1.0.0":
   version "1.1.0"
@@ -1943,9 +1943,8 @@ babylon@^6.18.0:
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.18.0.tgz#af2f3b88fa6f5c1e4c634d1a0f8eac4f55b395e3"
   integrity sha512-q/UEjfGJ2Cm3oKV71DJz9d25TPnq5rhBVL2Q4fA5wcC3jcrdn7+SssEybFIxwAvvP+YCsCYNKughoF33GxgycQ==
 
-"balance-common@git+https://github.com/balance-io/balance-common.git#wc-storage":
-  version "0.5.7"
-  resolved "git+https://github.com/balance-io/balance-common.git#4fe4b0f40356051046e700923861689f8e6594b0"
+"balance-common@file:../balance-common":
+  version "0.5.12"
   dependencies:
     axios "^0.18.0"
     bignumber.js "^7.0.1"
