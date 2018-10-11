@@ -1,19 +1,19 @@
 {
   "plugins": [
     "babel-plugin-styled-components",
-    "date-fns", 
+    "date-fns",
     [
-      "lodash", 
-      { 
-        "id": [
-          "lodash",
-          "recompact",
-          "recompose"
-        ] 
+      "lodash",
+      {
+        "id": ["lodash", "recompact", "recompose"]
+      }
+    ],
+    [
+      "module-resolver",
+      {
+        "root": ["./src"]
       }
     ]
   ],
-  "presets": [
-    "module:metro-react-native-babel-preset"
-  ],
+  "presets": ["module:metro-react-native-babel-preset"]
 }
