@@ -138,6 +138,7 @@ class WalletScreen extends React.PureComponent {
         }).start()
       ]);
     });
+    this.props.toggleSwiping(false);
   };
 
   hideSettingsOverlay = () => {
@@ -157,6 +158,7 @@ class WalletScreen extends React.PureComponent {
         this.setState({ settingsVisible: false });
       })
     ]);
+    this.props.toggleSwiping(true);
   };
 
   onPressCopy = () => {
